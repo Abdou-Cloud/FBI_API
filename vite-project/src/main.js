@@ -10,3 +10,23 @@ async function dataOphalen() {
     const data = await res.json();
     return data.items;
   }
+
+  dataOphalen().then(function (personen) {
+    container.innerHTML = "";
+  
+    personen.forEach(function (persoon) {
+      container.innerHTML += `
+        <div class="kaart">
+          <h3>${persoon.title}</h3>
+          <img src="${persoon.images[0].thumb}" alt="Foto van ${persoon.title}">
+          <p>Type: ${persoon.poster_classification}</p>
+          <p>Geslacht: ${persoon.sex}</p>
+          <p>Gewicht: ${persoon.weight}</p>
+          <p>Lengte: ${persoon.height_max}</p>
+          <p>Reward: ${persoon.reward_text}</p>
+          <p>Publicatiedatum: ${persoon.publication}</p>
+        </div>
+      `;
+    });
+  });
+  

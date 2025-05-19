@@ -4,14 +4,16 @@ const zoekInput = document.getElementById("searchInput");
 const filterType = document.getElementById("filterOptions");
 const container = document.getElementById("resultsContainer");
 
+let allePersonen = [];
 
 async function dataOphalen() {
     const res = await fetch("https://api.fbi.gov/wanted/v1/list?pageSize=50");
     const data = await res.json();
-    return data.items;
+    allePersonen = data.items;
+    toonPersonen(allePersonen);
   }
 
-  dataOphalen().then(function (personen) {
+  function toonPersonen(personen) {
     container.innerHTML = "";
   
     personen.forEach(function (persoon) {
@@ -28,5 +30,17 @@ async function dataOphalen() {
         </div>
       `;
     });
-  });
+  }
+
+  zoekInput.addEventListener("input", function () {
+    const zoekTerm = zoekInput.value.toLowerCase();
   
+    const gefilterd = allePersonen.filter(function (persoon) {
+      return persoon.title.toLowerCase().includes(zoekTerm);
+    });
+  
+    toonPersonen(gefilterd);
+  
+  });
+
+  dataOphalen();

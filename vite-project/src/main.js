@@ -3,7 +3,7 @@ import './style.css'
 const zoekInput = document.getElementById("searchInput");
 const filterType = document.getElementById("filterOptions");
 const container = document.getElementById("resultsContainer");
-
+const sorteerSelect = document.getElementById("sortOrder");
 let allePersonen = [];
 
 async function dataOphalen() {
@@ -43,4 +43,43 @@ async function dataOphalen() {
   
   });
 
+
   dataOphalen();
+
+  filterType.addEventListener("change", function () {
+    const zoekTerm = zoekInput.value.toLowerCase();
+    const filterWaarde = filterType.value;
+  
+    const gefilterd = allePersonen.filter(function (persoon) {
+      const titel = persoon.title.toLowerCase();
+      const type = persoon.poster_classification.toLowerCase();
+  
+      return titel.includes(zoekTerm) && (filterWaarde === "" || type.includes(filterWaarde));
+    });
+  
+    toonPersonen(gefilterd);
+  });
+
+  sorteerSelect.addEventListener("change", function () {
+    const zoekTerm = zoekInput.value.toLowerCase();
+    const filterWaarde = filterType.value;
+    const sorteerVolgorde = sorteerSelect.value;
+  
+    let gefilterd = allePersonen.filter(function (persoon) {
+      const titel = persoon.title.toLowerCase();
+      const type = persoon.poster_classification.toLowerCase();
+      return titel.includes(zoekTerm) && (filterWaarde === "" || type.includes(filterWaarde));
+    });
+  
+    if (sorteerVolgorde === "newest") {
+      gefilterd.sort(function (a, b) {
+        return new Date(b.publication) - new Date(a.publication);
+      });
+    } else if (sorteerVolgorde === "oldest") {
+      gefilterd.sort(function (a, b) {
+        return new Date(a.publication) - new Date(b.publication);
+      });
+    }
+  
+    toonPersonen(gefilterd);
+  });

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatiepagina</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Details van persoon</h1>
+    <main id="detailContainer"></main>
+    <footer>
+      <p>Web Advanced - Abdourahim Aboulkassimi 2024-2025</p>
+    </footer> 
+    
+    <script type="module">
+      const container = document.getElementById("detailContainer");
+      const params = new URLSearchParams(window.location.search);
+      const uid = params.get("id");
+    
+      async function haalPersoonOp(uid) {
+        const res = await fetch("https://api.fbi.gov/wanted/v1/list?pageSize=150");
+        const data = await res.json();
+        return data.items.find(function(persoon) {
+          return persoon.uid === uid;
+        });
+      }
+    
+      haalPersoonOp(uid).then(function(persoon) {
+        if (!persoon) {
+          container.innerHTML = "<p>Persoon niet gevonden.</p>";
+          return;
+        }
+    
+        container.innerHTML = `
+          <div class="detailkaart">
+            <h2>${persoon.title}</h2>
+            <img src="${persoon.images[0].large}" alt="Foto van ${persoon.title}">
+            <ul>
+              <li><strong>Type:</strong> ${persoon.poster_classification}</li>
+              <li><strong>Geslacht:</strong> ${persoon.sex}</li>
+              <li><strong>Gewicht:</strong> ${persoon.weight}</li>
+              <li><strong>Lengte:</strong> ${persoon.height_max}</li>
+              <li><strong>Reward:</strong> ${persoon.reward_text}</li>
+              <li><strong>Publicatiedatum:</strong> ${persoon.publication}</li>
+            </ul>
+            <p><a href="${persoon.url}" target="_blank">Bekijk officiële FBI-pagina</a></p>
+          </div>
+        `;
+      });
+    </script>
+ 
+</body>
+</html>

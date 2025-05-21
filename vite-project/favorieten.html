@@ -3,9 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opgeslagen profielen</title>
+    <title>favorieten</title>
+    <link rel="stylesheet" href="/vite-project/src/style.css">
+    
 </head>
 <body>
+    <h1>Opgeslagen profielen</h1>
+    <main id="favorietenContainer"></main>
+
+    <script type="module">
+        const container = document.getElementById("favorietenContainer");
+        const favorieten = JSON.parse(localStorage.getItem("favorieten")) || [];
     
+        async function laadData() {
+          const res = await fetch("https://api.fbi.gov/wanted/v1/list?pageSize=150");
+          const data = await res.json();
+    
+          const gefilterd = data.items.filter(function(persoon) {
+            return favorieten.includes(persoon.uid);
+          });
+    
+          if (gefilterd.length === 0) {
+            container.innerHTML = "<p>Je hebt nog geen profielen opgeslagen.</p>";
+            return;
+          }
+    
+          gefilterd.forEach(function(persoon) {
+            container.innerHTML += `
+              <div class="kaart">
+                <h3>${persoon.title}</h3>
+                <a href="detail.html?id=${persoon.uid}">
+                  <img src="${persoon.images[0].thumb}" alt="${persoon.title}">
+                </a>
+              </div>
+            `;
+          });
+        }
+    
+        laadData();
+      </script>
 </body>
 </html>

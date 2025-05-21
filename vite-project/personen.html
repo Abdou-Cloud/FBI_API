@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/vite-project/public/FBI.svg">
     <title>Informatiepagina</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/vite-project/src/style.css">
 </head>
 <body>
+  <div id="personen">
     <h1>Details van persoon</h1>
     <main id="detailContainer"></main>
     <footer>
@@ -37,6 +39,7 @@
             <h2>${persoon.title}</h2>
             <img src="${persoon.images[0].large}" alt="Foto van ${persoon.title}">
             <ul>
+              <p><button id="bewaarBtn">Bewaar dit profiel</button></p>
               <li><strong>Type:</strong> ${persoon.poster_classification}</li>
               <li><strong>Geslacht:</strong> ${persoon.sex}</li>
               <li><strong>Gewicht:</strong> ${persoon.weight}</li>
@@ -48,7 +51,18 @@
           </div>
         `;
       });
+
+      document.getElementById("bewaarBtn").addEventListener("click", function () {
+  let favorieten = JSON.parse(localStorage.getItem("favorieten")) || [];
+  if (!favorieten.includes(persoon.uid)) {
+    favorieten.push(persoon.uid);
+    localStorage.setItem("favorieten", JSON.stringify(favorieten));
+    alert("Profiel opgeslagen!");
+  } else {
+    alert("Dit profiel is al opgeslagen.");
+  }
+});
     </script>
- 
+ </div>
 </body>
 </html>

@@ -55,11 +55,11 @@ De FBI_API is een webapplicatie die de "Most Wanted"-lijst van de FBI toont. Geb
 
 ### Styling & Layout
 - **Basis HTML layout**: 
-  - Flexbox wordt gebruikt in [style.css](/src/style.css), bijvoorbeeld `.functions` op lijn 22.
+  - Flexbox wordt gebruikt in [style.css](/src/style.css), bijvoorbeeld `.functions` op lijn 42.
 - **Basis CSS**: 
-  - Styling van kaarten in [style.css](/src/style.css), `.kaart` op lijn 50.
+  - Styling van kaarten in [style.css](/src/style.css), `.kaart` op lijn 80.
 - **Gebruiksvriendelijke elementen**: 
-  - Verwijderknoppen en icoontjes zoals `★` in [index.html](/index.html), lijn 12.
+  - Verwijderknoppen en icoontjes zoals `★` in [index.html](/index.html), lijn 11.
 
 ### Tooling & Structuur
 - **Project opgezet met Vite**: 

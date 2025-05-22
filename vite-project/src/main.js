@@ -7,7 +7,7 @@ const sorteerSelect = document.getElementById("sortOrder");
 let allePersonen = [];
 
 async function dataOphalen() {
-    const res = await fetch("https://api.fbi.gov/wanted/v1/list?pageSize=50");
+    const res = await fetch("https://api.fbi.gov/wanted/v1/list?pageSize=51");
     const data = await res.json();
     allePersonen = data.items;
     toonPersonen(allePersonen);

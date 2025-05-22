@@ -84,7 +84,7 @@ async function dataOphalen() {
 
 const observer = new MutationObserver(() => {
   const aantal = container.querySelectorAll(".kaart").length;
-  teller.textContent = `Aantal resultaten: ${aantal}`;
+  teller.textContent = `results: ${aantal}`;
 });
 
 observer.observe(container, { childList: true });

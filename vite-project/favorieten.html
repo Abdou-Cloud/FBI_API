@@ -10,19 +10,24 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(38, 15, 185, 0.87);
-  background-color: #83dbf3;
+  color:black;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1{
+  padding: 1.5rem;
+  background-color: #1976d2;
+  border-radius: 10px;
+}
+
     </style>
     
 </head>
 <body>
-    <h1>Opgeslagen profielen</h1>
+    <h1>Saved profiles</h1>
     <main id="favorietenContainer"></main>
 
     <script type="module">
@@ -38,7 +43,7 @@
           });
     
           if (gefilterd.length === 0) {
-            container.innerHTML = "<p>Je hebt nog geen profielen opgeslagen.</p>";
+            container.innerHTML = "<p>No profiles are saved.</p>";
             return;
           }
     
@@ -46,7 +51,7 @@
             container.innerHTML += `
               <div class="kaart">
                 <h3>${persoon.title}</h3>
-                <a href="detail.html?id=${persoon.uid}">
+                <a href="personen.html?id=${persoon.uid}">
                   <img src="${persoon.images[0].thumb}" alt="${persoon.title}">
                 </a>
               </div>

@@ -7,34 +7,109 @@
     <title>Informatiepagina</title>
     <style>
       :root{
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+        font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(38, 15, 185, 0.87);
+  color:black;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bewaarBtn{
- border-radius: 2rem;
- background-color: rgba(38, 15, 185, 0.87);;
- color: white;
+.detailkaart{
+  box-sizing: border-box;
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 1rem 3rem 3rem ;
+    width: 50rem ;
+    list-style-type: none;
+    
+}
+
+ .detailkaart img,
+.detailkaart h2{
+width: 10rem;
+text-align: center;
+margin: auto;
+display: block;
 
 }
+
+.row,
+.row1,
+.row2{
+display: flex;
+padding: 12px 16px;
+border-bottom: 1px solid #ddd;
+background-color: white;
+
+
+}
+
+.row1{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.row2{
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+
+.cell{
+  
+  flex: 1;
+  padding: 0.3rem;
+  color: #333;
+}
+
+h1{
+  padding: 1.5rem;
+  background-color: #1976d2;
+  border-radius: 10px;
+}
+
+#bewaarBtn{
+ border-radius: 2rem;
+ background-color: #1976d2;
+ color: white;
+ padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left;
+}
+#bewaarBtn:hover {
+  background-color: #1a1acb;
+}
+
+#bewaarBtn , p{
+  text-align: left;
+}
+
+footer {
+  text-align: center;
+  margin-top: 3rem;
+ padding: 1rem; 
+ color: #1976d2;
+}
+
+
     </style>
 
 
 </head>
 <body>
   <div id="personen">
-    <h1>Details van persoon</h1>
+    <h1>Case Details</h1>
     <main id="detailContainer"></main>
-    <footer>
-      <p>Web Advanced - Abdourahim Aboulkassimi 2024-2025</p>
-    </footer> 
+  
     
     <script type="module">
       const container = document.getElementById("detailContainer");
@@ -51,24 +126,47 @@
     
       haalPersoonOp(uid).then(function(persoon) {
         if (!persoon) {
-          container.innerHTML = "<p>Persoon niet gevonden.</p>";
+          container.innerHTML = "<p>Person not found.</p>";
           return;
         }
     
         container.innerHTML = `
           <div class="detailkaart">
+           <img src="${persoon.images[0].large}" alt="Foto van ${persoon.title}">
             <h2>${persoon.title}</h2>
-            <img src="${persoon.images[0].large}" alt="Foto van ${persoon.title}">
-            <ul>
-              <p><button id="bewaarBtn">Bewaar dit profiel</button></p>
-              <li><strong>Type:</strong> ${persoon.poster_classification}</li>
-              <li><strong>Geslacht:</strong> ${persoon.sex}</li>
-              <li><strong>Gewicht:</strong> ${persoon.weight}</li>
-              <li><strong>Lengte:</strong> ${persoon.height_max}</li>
-              <li><strong>Reward:</strong> ${persoon.reward_text}</li>
-              <li><strong>Publicatiedatum:</strong> ${persoon.publication}</li>
-            </ul>
-            <p><a href="${persoon.url}" target="_blank">Bekijk officiële FBI-pagina</a></p>
+            
+            
+              <p><button id="bewaarBtn">Save this profile</button></p>
+              <div class="row1">
+  <div class="cell"><strong>Type:</strong></div>
+  <div class="cell">${persoon.poster_classification || "/"}</div>
+</div>
+
+<div class="row">
+  <div class="cell"><strong>Sex:</strong></div>
+  <div class="cell">${persoon.sex || "/"}</div>
+</div>
+
+<div class="row">
+  <div class="cell"><strong>Weight:</strong></div>
+  <div class="cell">${persoon.weight || "/"}</div>
+</div>
+
+<div class="row">
+  <div class="cell"><strong>Height:</strong></div>
+  <div class="cell">${persoon.height_max || "/"}</div>
+</div>
+
+<div class="row">
+  <div class="cell"><strong>Reward:</strong></div>
+  <div class="cell">${persoon.reward_text || "/"}</div>
+</div>
+
+<div class="row2">
+  <div class="cell"><strong>Publication:</strong></div>
+  <div class="cell">${persoon.publication || "/"}</div>
+</div>
+            <a href="${persoon.url}" target="_blank">Check official FBI-page</a>
           </div>
         `;
      
@@ -78,9 +176,9 @@
   if (!favorieten.includes(persoon.uid)) {
     favorieten.push(persoon.uid);
     localStorage.setItem("favorieten", JSON.stringify(favorieten));
-    alert("Profiel opgeslagen!");
+    alert("Profile saved!");
   } else {
-    alert("Dit profiel is al opgeslagen.");
+    alert("This profile is already saved.");
   }
 });
 });

@@ -79,3 +79,12 @@ async function dataOphalen() {
   
     toonPersonen(gefilterd);
   });
+
+  const teller = document.getElementById("aantalResultaten");
+
+const observer = new MutationObserver(() => {
+  const aantal = container.querySelectorAll(".kaart").length;
+  teller.textContent = `Aantal resultaten: ${aantal}`;
+});
+
+observer.observe(container, { childList: true });
